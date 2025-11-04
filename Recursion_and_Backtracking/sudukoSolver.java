@@ -13,7 +13,11 @@ public class sudukoSolver {
                         if (isValid(board, i, j, c)) {
                             //if valid than fill the value
                             board[i][j] = c;
-                            // recursion call
+                            //Recursion call ka flow:
+                            //	•	Pehle empty cell pe 1-9 trial ho raha hai.
+                            //	•	Kisi number se recursion call kar ke next empty cell try ho raha hai.
+                            //	•	Jab pura board fill ho jaata hai (`col == n` base case), toh recursion return karke solution confirm karta hai.
+                            //	•	Agar kisi step pe number dalna possible nahi, toh previous cell ka number hata ke alternate number try karta hai (backtracking).
                             if (solve(board) == true) {
                                 return true;
                             }
