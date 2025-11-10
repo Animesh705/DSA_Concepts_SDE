@@ -22,6 +22,11 @@ public class greater_prior {
         }
 
         int count = 1; // first element always counts
+        //You don’t actually need nested loops for this.
+        //Instead of checking all previous elements each time,
+        //just track the maximum value you’ve seen so far.
+
+        //If the current element > max so far → it’s a new “record-breaker,” so count it and update the max.
         int maxSoFar = arr[0];
 
         for (int i = 1; i < n; i++) {
