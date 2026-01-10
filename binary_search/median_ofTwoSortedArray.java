@@ -1,50 +1,66 @@
-package binary_search;
 import java.util.*;
-public class median_ofTwoSortedArray {
-        public double findMedianSortedArrays(int[] a, int[] b) {
-            // Make sure array a is the smaller one to minimize binary search range
-            if (a.length > b.length) return findMedianSortedArrays(b, a);
 
-            int n1 = a.length, n2 = b.length;
-            int low = 0, high = n1;
+class median_ofTwoSortedArray {
 
-            // Binary search on the smaller array
-            while (low <= high) {
-                // Calculate cut points for both arrays
-                int cut1 = (low + high) / 2;
-                int cut2 = (n1 + n2 + 1) / 2 - cut1;
+    // Function to find the median
+    public static double median(int[] a, int[] b) {
 
-                // Get values to the left and right of the partition
-                // Use Integer.MIN_VALUE and MAX_VALUE to handle edge cases
-                int l1 = (cut1 == 0) ? Integer.MIN_VALUE : a[cut1 - 1];
-                int l2 = (cut2 == 0) ? Integer.MIN_VALUE : b[cut2 - 1];
-                int r1 = (cut1 == n1) ? Integer.MAX_VALUE : a[cut1];
-                int r2 = (cut2 == n2) ? Integer.MAX_VALUE : b[cut2];
+        // Get sizes of both arrays
+        int n1 = a.length, n2 = b.length;
 
-                // If partition is valid
-                if (l1 <= r2 && l2 <= r1) {
-                    // Even total elements => average of two middle elements
-                    if ((n1 + n2) % 2 == 0)
-                        return (Math.max(l1, l2) + Math.min(r1, r2)) / 2.0;
-                    else
-                        // Odd total elements => max of left parts
-                        return Math.max(l1, l2);
-                }
-                // Move left in array a
-                else if (l1 > r2)
-                    high = cut1 - 1;
-                    // Move right in array a
-                else
-                    low = cut1 + 1;
+        // Total size
+        int n = n1 + n2;
+
+        // Median indices
+        int ind2 = n / 2;
+        int ind1 = ind2 - 1;
+
+        // Initialize pointers and values
+        int cnt = 0, i = 0, j = 0;
+        int ind1el = -1, ind2el = -1;
+
+        // Merge step to find median
+        while (i < n1 && j < n2) {
+            if (a[i] < b[j]) {
+                if (cnt == ind1) ind1el = a[i];
+                if (cnt == ind2) ind2el = a[i];
+                i++;
+            } else {
+                if (cnt == ind1) ind1el = b[j];
+                if (cnt == ind2) ind2el = b[j];
+                j++;
             }
-
-            return 0.0;
+            cnt++;
         }
 
-        public static void main(String[] args) {
-            median_ofTwoSortedArray sol = new median_ofTwoSortedArray();
-            int[] a = {1, 3};
-            int[] b = {2};
-            System.out.println("Median is: " + sol.findMedianSortedArrays(a, b));
+        // Remaining elements in a
+        while (i < n1) {
+            if (cnt == ind1) ind1el = a[i];
+            if (cnt == ind2) ind2el = a[i];
+            cnt++;
+            i++;
         }
+
+        // Remaining elements in b
+        while (j < n2) {
+            if (cnt == ind1) ind1el = b[j];
+            if (cnt == ind2) ind2el = b[j];
+            cnt++;
+            j++;
+        }
+
+        // Return median
+        if (n % 2 == 1) return (double) ind2el;
+        return (ind1el + ind2el) / 2.0;
+    }
+
+    public static void main(String[] args) {
+
+        // Input arrays
+        int[] a = {1, 4, 7, 10, 12};
+        int[] b = {2, 3, 6, 15};
+
+        // Output the result
+        System.out.printf("The median is %.1f\n", median_ofTwoSortedArray.median(a, b));
+    }
 }
