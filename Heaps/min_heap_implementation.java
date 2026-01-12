@@ -78,3 +78,12 @@ public class min_heap_implementation {
     }
 }
 
+//for max. heap :
+// Parent >= children
+//
+//Replace:
+//	•	< with >
+//	•	smallest with largest
+//
+//That’s it.
+
