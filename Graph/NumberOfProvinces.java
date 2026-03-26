@@ -59,11 +59,7 @@ public class NumberOfProvinces {
 
         // Number of vertices
         int V = 3;
-
-        // Create object of Solution class
         NumberOfProvinces sol = new NumberOfProvinces();
-
-        // Call function and print result
         System.out.println(sol.numProvinces(adj, V));
     }
 }
