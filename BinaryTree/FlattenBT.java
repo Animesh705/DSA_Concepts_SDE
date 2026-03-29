@@ -11,8 +11,7 @@ public class FlattenBT {
         // Iterate until 'curr'
         // becomes NULL
         while (curr != null) {
-            // Check if the current
-            // node has a left child
+            // Check if the current node has a left child
             if (curr.left != null) {
                 // If yes, find the rightmost
                 // node in the left subtree
