@@ -1,10 +1,9 @@
 package Graph;
-import java.io.*;
 import java.util.*;
-public class DisjointSet {
+public class DisjointSetRank {
     List<Integer> rank = new ArrayList<>();
     List<Integer> parent = new ArrayList<>();
-    public DisjointSet(int n) {
+    public DisjointSetRank(int n) {
         for(int i=0;i<=n;i++){
             //initially everyone has rank zero because no one is beneath them and every node is parent to itself
             rank.add(0);
@@ -49,7 +48,7 @@ public class DisjointSet {
         }
     }
     public static void main(String[] args) {
-        DisjointSet ds = new DisjointSet(7);
+        DisjointSetRank ds = new DisjointSetRank(7);
         ds.unionByRank(1,2);
         ds.unionByRank(2,3);
         ds.unionByRank(4,5);
