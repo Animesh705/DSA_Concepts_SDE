@@ -3,8 +3,8 @@ import java.util.*;
 public class Strong_connected_compo_kosaraju {
     //dfs for ori. graph ,traversing and storing all the node in stack(lifo) acc. to the finishing time(finish first, means comes at last)
     private void dfs(int node, int[] vis,ArrayList<ArrayList<Integer>> adj,Stack<Integer> st){
-        vis[node] = 1; // marking first node as visited
-        //traversing all the adjacent node of the first node
+        vis[node] = 1; // marking first node as visited whichh is passed to the dfs function
+        //traversing all the adjacent node of the node passed to the function
         for(Integer it : adj.get(node)){
             if(vis[it] == 0){
                 dfs(it, vis, adj, st); // calling dfs for all the neighbors node
@@ -31,26 +31,30 @@ public class Strong_connected_compo_kosaraju {
                 dfs(i, vis, adj, st);// calling dfs for the all the node , doing this to cover all the connected components
             }
         }
+        //adjT : adj transpose , created a new adj list : adjT=[ArrayList<that will contaiin integer>]
         ArrayList<ArrayList<Integer>> adjT = new ArrayList<ArrayList<Integer>>();
         for(int i = 0; i < v; i++){
+            //adjT = [[],[],[],....total v number of empty list that can contain integer cretaed]
             adjT.add(new ArrayList<Integer>());
         }
         for(int i = 0; i < v; i++){
-            vis[i] = 0;
+            vis[i] = 0; // while traversing marking all the nodes as 0
             for(Integer it : adj.get(i)){
+                //earlier : i -> it
+                //now : it -> i , for revrsing the whole graph
                 adjT.get(it).add(i);
-            }
+            }// graph reversed
         }
-        int scc=0;
+        int scc=0; // for counting
         while(!st.isEmpty()){
-            int node=st.peek();
+            int node=st.peek(); //lifo : takiing out nodes accorsing to thier finshing time
             st.pop();
             if(vis[node] == 0){
-                scc++;
-                dfs3(node, vis, adjT);
+                scc++;// everytime dfs is called
+                dfs3(node, vis, adjT);// calling dfs for all nodes of reversed graph
             }
         }
-        return scc;
+        return scc;// returning the count
     }
     public static void main(String[] args) {
 
