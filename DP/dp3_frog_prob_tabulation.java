@@ -8,6 +8,7 @@ package DP;
 import java.util.*;
 import static java.lang.Math.abs;
 public class dp3_frog_prob_tabulation {
+    /* Tabulation method
     public static int frog(int[] height) {
         if (height == null || height.length == 0) return 0;
         int n=height.length;
@@ -24,6 +25,29 @@ public class dp3_frog_prob_tabulation {
             dp[i]=Math.min(jumpOne,jumpSecond);
         }
         return dp[n-1];
+    }
+     */
+    //Tabulation method with space optimization
+    public static int frog(int[] height) {
+        if (height == null || height.length == 0) return 0;
+        int n=height.length;
+        //Only one stone exists → frog is already there → no jump → no energy needed
+        if(n==1) return 0;
+        //initialize the prev(i-1) and prev2(i-2) ,
+        int prev=0;
+        int prev2=0;
+        //i=1 , because we know dp[0]=0 also we know i=0 is starting point no jump needed ,
+        for(int i=1;i<n;i++){
+            int jumpOne = prev + Math.abs(height[i] - height[i - 1]);
+            int jumpSecond =Integer.MAX_VALUE;
+            if(i>1) {
+                jumpSecond = prev2 + Math.abs(height[i] - height[i - 2]);
+            }
+            int curr=Math.min(jumpOne,jumpSecond);
+            prev2=prev;
+            prev=curr;
+        }
+        return prev;
     }
     public static void main(String[] args) {
         // Define the heights array
